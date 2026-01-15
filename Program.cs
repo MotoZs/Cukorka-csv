@@ -11,15 +11,23 @@ foreach (var line in lines)
     sugars.Add(sugar);
 }
 
+var orders = new List<Order>();
+var lines2 = File.ReadAllLines("Orders.csv");
+foreach (var line in lines2.Skip(1))
+{
+    var data = line.Split(", ");
+    var order = new Order { orderID = int.Parse(data[0]), sugarID = int.Parse(data[1]), quantity = int.Parse(data[2]), total = int.Parse(data[3]),  };
+    orders.Add(order);
+}
+
 while (true)
 {
-    Console.WriteLine("Mit szeretnél csinálni? 1 - listázás | 2 - hozzáadás | 3 - módosítás | 4 - törlés | 0 - kilépés");
+    Console.WriteLine("1 - listázás | 2 - hozzáadás | 3 - módosítás | 4 - törlés | 0 - kilépés");
     var be = int.Parse(Console.ReadLine());
 
     switch (be)
     {
         case 0:
-            Environment.Exit(0);
             break;
 
         case 1:
@@ -72,6 +80,24 @@ while (true)
             break;
 
         default: Console.WriteLine("Rossz szám!"); break;
+    }
+
+    Console.WriteLine("1 - Rendelések listázása | 2 - Új rendelés | 0 - kilépés");
+    var be2 = int.Parse(Console.ReadLine());
+
+    switch (be2) 
+    {
+        case 0:
+            return;
+        case 1:
+            foreach (var order in orders)
+            {
+                Console.WriteLine("ID: " + order.orderID + ", Cukor ID: " + order.sugarID + ", Rendelt Mennyiség: " + order.quantity + ", Total: " + order.total);
+            }
+            break;
+        case 2:
+
+            break;
     }
 }
 

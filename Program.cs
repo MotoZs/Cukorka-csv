@@ -1,4 +1,5 @@
 ﻿using Cukorka;
+using System.Text.Json;
 
 Console.WriteLine("Hello, World!");
 
@@ -88,6 +89,7 @@ while (true)
     switch (be2) 
     {
         case 0:
+            SaveFileToJson(sugars, orders);
             return;
         case 1:
             foreach (var order in orders)
@@ -110,3 +112,10 @@ void Save(List<Sugar> sugars)
     }
     File.WriteAllLines("Sugars.csv", lines);
 }
+
+ void SaveFileToJson(List<Sugar> sugars, List<Order> orders)
+{
+    var value = new { orders, sugars };
+    var json = JsonSerializer.Serialize(value);
+    File.WriteAllText("teszt.json", json);
+} 

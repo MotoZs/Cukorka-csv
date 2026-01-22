@@ -39,16 +39,45 @@ while (true)
             break;
 
         case 2:
+            bool temp = true;
             Console.WriteLine("Add meg a cukorka nevét: ");
             var newName = Console.ReadLine();
-            Console.WriteLine("Add meg a cukorka árát: ");
-            var newPrice = int.Parse(Console.ReadLine());
-            Console.WriteLine("Add meg a cukorka készlet mennyiségét: ");
-            var newQuantity = int.Parse(Console.ReadLine());
+            var price = 0;
+            while (temp)
+            {
+                Console.WriteLine("Add meg a cukorka árát: ");
+                var newPriceString = Console.ReadLine();
+                if (!int.TryParse(newPriceString, out int newPrice))
+                {
+                    Console.WriteLine("Hibás adat!");
+                }
+                else
+                {
+                    price = newPrice;
+                    temp=false;
+                    break;
+                }
+            }
+            var quantity = 0;
+            while (temp)
+            {
+                Console.WriteLine("Add meg a cukorka készlet mennyiségét: ");
+                var newQuantityString = Console.ReadLine();
+                if(!int.TryParse(newQuantityString, out int newQuantity))
+                {
+                    Console.WriteLine("Hibás adat");  
+                }
+                else
+                {
+                    quantity = newQuantity;
+                    temp=false;
+                    break;
+                }
+            }
             var newId = sugars.Max(s => s.id) + 1;
             var newSugar = new Sugar 
             { 
-                id = newId, name = newName, price = newPrice, quantity = newQuantity
+                id = newId, name = newName, price = price, quantity = quantity
             };
             sugars.Add(newSugar);
             var rows = new List<string>();
